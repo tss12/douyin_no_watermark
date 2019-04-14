@@ -16,13 +16,11 @@ def getHeaders( filename, key ):
 def parseUrl( url, headers ):    
     res = requests.get( url, headers=headers, verify=False );    
     res.encoding = 'utf-8'
-    # print(res.text)
-    # return
+    
     data = res.text
     cover = data.split("cover: \"")[1].split("\"")[0]
     playAddr = data.split("playAddr: \"")[1].split("\",")[0]
     videoId = playAddr.split("video_id=")[1].split("&")[0]
-    # https://www.iesdouyin.com/share/video/6679599825291316494/?region=CN&mid=6679412062147332872&u_code=l1b63kge&titleType=title&timestamp=1555231715&utm_campaign=client_share&app=aweme&utm_medium=ios&tt_from=copy&utm_source=copy&iid=59857117820
     videoAddr = playAddr.replace("/playwm/","/play/");
     print (videoAddr)
     return
@@ -54,10 +52,10 @@ if __name__ == '__main__':
     arduinoHeaders = getHeaders( "config.ini", "arduino-headers" );
 
     parseUrl( url, headers);
-    # parseData = parseUrl( url, headers);
-    # print( "视频源地址为：" + parseData['addr'] );
-    # 下载视频
-    # filename = downVideo( parseData, arduinoHeaders );
-    # print( "视频下载完成，", "视频Id为：",parseData['id'], "\n" );
+    parseData = parseUrl( url, headers);
+    print( "视频源地址为：" + parseData['addr'] );
+    #下载视频
+    filename = downVideo( parseData, arduinoHeaders );
+    print( "视频下载完成，", "视频Id为：",parseData['id'], "\n" );
     print( "视频保存在当前同级目录下，格式为mp4\n" );
     
